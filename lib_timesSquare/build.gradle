@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+apply plugin: 'checkstyle'
+
+task checkstyle(type: Checkstyle) {
+  configFile rootProject.file('checkstyle.xml')
+  source 'src/main/java'
+  ignoreFailures false
+  showViolations true
+  include '**/*.java'
+
+  classpath = files()
+}
+
+afterEvaluate {
+  if (project.tasks.findByName('check')) {
+    check.dependsOn('checkstyle')
+  }
+}
+
+android {
+  compileSdkVersion 26
+  buildToolsVersion "28.0.3"
+
+  defaultConfig {
+    minSdkVersion 16
+    targetSdkVersion 26
+    versionCode 1
+    //versionCode project.ext.versionCodeInt
+    versionName "1.0"
+  }
+
+  lintOptions {
+    warning 'MissingTranslation'
+    textReport true
+    textOutput 'stdout'
+  }
+}
+
+dependencies {
+    implementation 'com.squareup:android-times-square:1.6.5@aar'
+}
+
+//apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
