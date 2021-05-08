@@ -1,3 +1,4 @@
+include ':library_slidingMenu'
 include ':demo'
 include ':library'
 include ':calligraphy'
